@@ -1,241 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود به داشبورد</title>
-    <style>
-        <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Italian Portal</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
     body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(to bottom, #e1e8f0, #f4f6fa);
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+      margin: 0;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
-    .login-container {
-        background-color: #ffffff;
-        padding: 20px 15px;
-        border-radius: 12px;
-        box-shadow: 0 6px 23px rgba(0, 0, 0, 0.1);
-        width: 80%;
-        max-width: 450px;
-        text-align: center;
-        direction: rtl;
+    .container {
+      background: #ffffff;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
     }
 
-    .logo {
-        width: 40px;
-        margin-bottom: 4px;
+    .container img {
+      width: 80px;
+      margin-bottom: 15px;
     }
 
     h2 {
-        margin-bottom: 25px;
-        color: #1a237e;
-        font-size: 22px;
-        font-weight: 600;
+      margin-bottom: 25px;
+      color: #333;
     }
 
     .form-group {
-        margin-bottom: 15px;
-        text-align: Right;
-        position: relative;
+      text-align: left;
+      margin-bottom: 15px;
     }
 
     label {
-        display: block;
-        margin-bottom: 2px;
-        font-size: 13px;
-        color: #333;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #444;
     }
 
     input[type="text"] {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        box-sizing: border-box;
-        font-size: 14px;
-        transition: border-color 0.3s ease;
-    }
-
-    input[type="text"]:focus {
-        border-color: #1a73e8;
-        outline: none;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
     }
 
     button {
-        background-color: #1a73e8;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin-top: 10px;
-        width: 100%;
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
     }
 
     button:hover {
-        background-color: #155ab6;
+      background-color: #0056b3;
     }
 
     .error-message {
-        color: #d32f2f;
-        margin-top: 15px;
-        font-size: 14px;
+      color: red;
+      margin-top: 15px;
+      display: none;
     }
-
-    #nationalitySuggestions {
-        position: absolute;
-        top: calc(100% + 4px);
-        left: 0;
-        right: 0;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-top: none;
-        border-radius: 0 0 6px 6px;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-        z-index: 10;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: none;
-        max-height: 150px;
-        overflow-y: auto;
-    }
-
-    #nationalitySuggestions li {
-        padding: 10px 12px;
-        font-size: 14px;
-        cursor: pointer;
-        border-bottom: 1px solid #eee;
-    }
-
-    #nationalitySuggestions li:hover {
-        background-color: #f1f1f1;
-    }
-</style>
-
+  </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="logo.png" alt="لوگو" class="logo">
-        <h2>ورود به داشبورد کاربری</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="name">اسم:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="lastName">تخلص:</label>
-                <input type="text" id="lastName" name="lastName" required>
-            </div>
-            <div class="form-group">
-                <label for="nationality">ملیت:</label>
-                <input type="text" id="nationality" name="nationality" autocomplete="off" required>
-                <ul id="nationalitySuggestions"></ul>
-            </div>
-            <div class="form-group">
-                <label for="passportNumber">نمبر پاسپورت:</label>
-                <input type="text" id="passportNumber" name="passportNumber" required>
-            </div>
-            <div class="form-group">
-                <label for="ceuNumber">نمبر CEU:</label>
-                <input type="text" id="ceuNumber" name="ceuNumber" required>
-            </div>
-            <button type="submit">ورود</button>
-            <div id="errorMessage" class="error-message" style="display: none;"></div>
-        </form>
-    </div>
+  <div class="container">
+    <img src="logo.png" alt="Logo">
+    <h2>Login to Dashboard</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="name">First Name</label>
+        <input type="text" id="name" required />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" required />
+      </div>
+      <div class="form-group">
+        <label for="nationality">Nationality</label>
+        <input type="text" id="nationality" required />
+      </div>
+      <div class="form-group">
+        <label for="passport">Passport Number</label>
+        <input type="text" id="passport" required />
+      </div>
+      <div class="form-group">
+        <label for="ceu">CEU Number</label>
+        <input type="text" id="ceu" required />
+      </div>
+      <button type="submit">Login</button>
+      <div class="error-message" id="errorMessage">Incorrect login details.</div>
+    </form>
+  </div>
 
-    <script>
-        const nationalityInput = document.getElementById('nationality');
-        const nationalitySuggestions = document.getElementById('nationalitySuggestions');
-        let countries = [];
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-        // Load countries from JSON
-        fetch('countries.json')
-            .then(response => response.json())
-            .then(data => {
-                countries = data.countries;
-            });
+      const name = document.getElementById("name").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const nationality = document.getElementById("nationality").value.trim();
+      const passport = document.getElementById("passport").value.trim();
+      const ceu = document.getElementById("ceu").value.trim();
+      const errorDiv = document.getElementById("errorMessage");
 
-        nationalityInput.addEventListener('input', function() {
-            const inputText = this.value.toLowerCase();
-            const filteredCountries = countries.filter(country =>
-                country.toLowerCase().includes(inputText)
-            );
+      fetch("data.json")
+        .then(response => response.json())
+        .then(users => {
+          const found = users.some(user =>
+            user.name === name &&
+            user.lastName === lastName &&
+            user.nationality === nationality &&
+            user.passportNumber === passport &&
+            user.ceuNumber === ceu
+          );
 
-            displaySuggestions(filteredCountries);
+          if (found) {
+            window.location.href = dashboard.html?name=${encodeURIComponent(name)};
+          } else {
+            errorDiv.style.display = "block";
+          }
+        })
+        .catch(err => {
+          console.error("Error reading JSON:", err);
+          errorDiv.textContent = "Server error.";
+          errorDiv.style.display = "block";
         });
-
-        function displaySuggestions(suggestions) {
-            nationalitySuggestions.innerHTML = '';
-            if (suggestions.length > 0 && nationalityInput.value.trim() !== '') {
-                suggestions.forEach(country => {
-                    const li = document.createElement('li');
-                    li.textContent = country;
-                    li.addEventListener('click', function() {
-                        nationalityInput.value = country;
-                        nationalitySuggestions.style.display = 'none';
-                    });
-                    nationalitySuggestions.appendChild(li);
-                });
-                nationalitySuggestions.style.display = 'block';
-            } else {
-                nationalitySuggestions.style.display = 'none';
-            }
-        }
-
-        // Hide suggestions when focus is lost from the input field
-        nationalityInput.addEventListener('blur', function() {
-            // Delay hiding to allow click on suggestion
-            setTimeout(() => {
-                nationalitySuggestions.style.display = 'none';
-            }, 200);
-        });
-
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const lastName = formData.get('lastName');
-            const nationality = formData.get('nationality');
-            const passportNumber = formData.get('passportNumber');
-            const ceuNumber = formData.get('ceuNumber');
-            const errorMessageDiv = document.getElementById('errorMessage');
-
-            fetch('data.json')
-                .then(response => response.json())
-                .then(users => {
-                    const userFound = users.some(user =>
-                        user.name === name &&
-                        user.lastName === lastName &&
-                        user.nationality === nationality &&
-                        user.passportNumber === passportNumber &&
-                        user.ceuNumber === ceuNumber
-                    );
-
-                    if (userFound) {
-                        window.location.href = dashboard.html?name=${encodeURIComponent(name)}&lastName=${encodeURIComponent(lastName)};
-                    } else {
-                        errorMessageDiv.textContent = 'اطلاعات ورود نادرست است.';
-                        errorMessageDiv.style.display = 'block';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading user data:', error);
-                    errorMessageDiv.textContent = 'خطا در بارگیری اطلاعات کاربران.';
-                    errorMessageDiv.style.display = 'block';
-                });
-        });
-    </script>
+    });
+  </script>
 </body>
 </html>
