@@ -1,0 +1,24 @@
+[
+    {
+        "name": "رضا",
+        "lastName": "محمدی",
+        "nationality": "افغانستان",
+        "passportNumber": "AFG1234567",
+        "ceuNumber": "CEU001"
+    },
+    {
+        "name": "فاطمه",
+        "lastName": "حسینی",
+        "nationality": "ایران",
+        "passportNumber": "IRN9876543",
+        "ceuNumber": "CEU002"
+    },
+    {
+        "name": "احمد",
+        "lastName": "عثمانی",
+        "nationality": "افغانستان",
+        "passportNumber": "AFG7654321",
+        "ceuNumber": "CEU003"
+    }
+    // ... سایر کاربران
+]

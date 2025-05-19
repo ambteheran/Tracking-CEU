@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد کاربری</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background-color: #333;
+            color: white;
+            width: 200px;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sidebar img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+        .sidebar button {
+            background-color: transparent;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            width: 100%;
+            text-align: right;
+            box-sizing: border-box;
+        }
+        .sidebar button:hover {
+            background-color: #555;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .header img {
+            height: 50px;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        #result-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        #result-image {
+            max-width: 100%;
+            height: auto;
+        }
+        #upload-passport, #upload-images {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        #passport-scan-container {
+            margin-top: 10px;
+        }
+        #passport-scan-video {
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img src="logo-sidebar.png" alt="لوگو سایدبار">
+        <button onclick="showResult()">نتیجه بررسی</button>
+        <button onclick="downloadResult()">دانلود نتیجه</button>
+        <button onclick="showUploadPassport()">آپلود پاسپورت</button>
+        <button onclick="showUploadImages()">آپلود تصاویر به اندازه پاسپورت</button>
+    </div>
+    <div class="content">
+        <div class="header">
+            <img src="logo-header.png" alt="لوگو هیدر">
+            <h1>داشبورد کاربری</h1>
+        </div>
+
+        <div id="result-container" style="display: none;">
+            <h2>نتیجه بررسی</h2>
+            <img id="result-image" src="user-image.jpg" alt="تصویر کاربر" style="width: 80%; max-width: 600px;">
+        </div>
+
+        <div id="download-section" style="display: none;">
+            <h2>دانلود نتیجه</h2>
+            <p>برای دانلود فایل نتیجه، روی دکمه زیر کلیک کنید:</p>
+            <button onclick="triggerDownload()">دانلود فایل PDF</button>
+        </div>
+
+        <div id="upload-passport" style="display: none;">
+            <h2>آپلود پاسپورت</h2>
+            <p>فایل PDF یا اسکن پاسپورت خود را آپلود کنید:</p>
+            <input type="file" id="passport-pdf" accept=".pdf">
+            <div id="passport-scan-container">
+                <button id="scan-passport-button">اسکن پاسپورت (با دوربین)</button>
+                <video id="passport-scan-video" width="320" height="240" style="display: none;"></video>
+            </div>
+        </div>
+
+        <div id="upload-images" style="display: none;">
+            <h2>آپلود تصاویر به اندازه پاسپورت</h2>
+            <p>فایل‌های تصویری خود را با فرمت PDF آپلود کنید:</p>
+            <input type="file" id="images-pdf" accept=".pdf" multiple>
+        </div>
+
+        <div class="footer">
+            <img src="logo-footer.png" alt="لوگو فوتر" height="30">
+        </div>
+    </div>
+
+    <script>
+        // Example user-specific data (replace with actual data retrieval)
+        const userData = {
+            resultImage: 'user-image.jpg', // Path to user's result image
+            resultFile: 'user-result.pdf'   // Path to user's result PDF file
+        };
+
+        function showResult() {
+            document.getElementById('result-container').style.display = 'block';
+            document.getElementById('download-section').style.display = 'none';
+            document.getElementById('upload-passport').style.display = 'none';
+            document.getElementById('upload-images').style.display = 'none';
+            document.getElementById('result-image').src = userData.resultImage;
+        }
+
+        function downloadResult() {
+            // This would ideally trigger a server-side download or use a library for client-side PDF generation
+            // For a simple example, we'll just link to the file.
+            window.location.href = userData.resultFile;
+        }
+
+        function triggerDownload() {
+            window.location.href = userData.resultFile;
+        }
+
+        function showUploadPassport() {
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('download-section').style.display = 'none';
+            document.getElementById('upload-passport').style.display = 'block';
+            document.getElementById('upload-images').style.display = 'none';
+            // Add logic for camera access and passport scanning here
+            const scanPassportButton = document.getElementById('scan-passport-button');
+            const scanPassportVideo = document.getElementById('passport-scan-video');
+
+            scanPassportButton.addEventListener('click', async () => {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    scanPassportVideo.srcObject = stream;
+                    scanPassportVideo.style.display = 'block';
+                } catch (error) {
+                    console.error('Error accessing camera:', error);
+                    alert('دسترسی به دوربین امکان پذیر نیست.');
+                }
+            });
+        }
+
+        function showUploadImages() {
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('download-section').style.display = 'none';
+            document.getElementById('upload-passport').style.display = 'none';
+            document.getElementById('upload-images').style.display = 'block';
+        }
+
+        // Get user info from URL parameters (passed from login page)
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('name');
+        const userLastName = urlParams.get('lastName');
+
+        if (userName && userLastName) {
+            document.querySelector('.content h1').textContent = داشبورد کاربری ${userName} ${userLastName};
+        }
+    </script>
+</body>
+</html>
